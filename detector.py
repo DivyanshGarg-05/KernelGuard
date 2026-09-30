@@ -9,7 +9,7 @@ class ThreatDetector:
     def __init__(self, warmup_size=100, contamination=0.05):
         self.baseline_data = []
         self.warmup_size = warmup_size 
-        self.is_trained = False  # This lock fixes our CPU scaling!
+        self.is_trained = False 
         self.model = IsolationForest(contamination=contamination, random_state=42)
         self.logger = ForensicLogger()
 
@@ -23,11 +23,10 @@ class ThreatDetector:
             "connect": connect_c
         }
         
-        # Phase 1: Global Warm-Up (Collecting the baseline)
+        # Phase 1: (Collecting the baseline)
         if not self.is_trained:
             self.baseline_data.append(vector)
             
-            # Train EXACTLY ONCE when we hit the threshold
             if len(self.baseline_data) >= self.warmup_size:
                 print(f"\n[*] Warm-up threshold reached ({self.warmup_size} events).")
                 print("[*] Training global behavioral baseline...")
@@ -39,10 +38,9 @@ class ThreatDetector:
                 self.is_trained = True
                 print("[+] Model locked. Transitioning to Active Threat Hunting.\n")
                 
-            return # Exit the function early during warm-up
+            return
 
         # Phase 2: Active Threat Hunting (Prediction Only)
-        # We only reach this code if self.is_trained == True
         current_features = pd.DataFrame([vector]).drop(columns=['pid'])
         prediction = self.model.predict(current_features)
         

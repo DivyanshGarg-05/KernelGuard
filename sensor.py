@@ -76,7 +76,7 @@ print("Polling kernel scoreboard every 5 seconds... (Press Ctrl+C to exit)")
 
 try:
     while True:
-        # User-space sleeps, letting the kernel do the heavy counting
+        # User-space sleeps, kernel do the heavy counting
         time.sleep(5)
         
         # Iterate through the eBPF Hash Map
