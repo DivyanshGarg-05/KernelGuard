@@ -25,3 +25,12 @@ This project requires a Linux environment (e.g., Fedora, Ubuntu) with root privi
 sudo dnf install bcc-tools bcc-devel python3-bcc  # Fedora/RHEL
 sudo apt install bpfcc-tools linux-headers-$(uname -r) python3-bpfcc # Ubuntu/Debian
 pip3 install pandas scikit-learn
+```
+
+## Threat Detection & Testing
+Verify The Alert: [!] BEHAVIORAL ANOMALY DETECTED: PID 3666
+```bash
+sudo python3 sensor.py
+chmod +x simulate_attack.sh
+./simulate_attack.sh
+```
